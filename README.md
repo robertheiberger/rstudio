@@ -4,7 +4,7 @@ Hack for creating an rstudio container to run in ecs.
 More details to come.
 
 1. Update Dockerfile. Replace fid with the username you want to use.
-2. Build docker image. 
+2. Build docker image.
    docker build -t "rstudio/fid" --build-arg BASE_IMAGE=jupyter/scipy-notebook --build-arg JUPYTERHUB_VERSION=0.8.0 .
 3. Tage docker build.
    docker tag "rstudio/fid" ACCOUNTID.dkr.ecr.REGION.amazonaws.com/rstudio/fid
