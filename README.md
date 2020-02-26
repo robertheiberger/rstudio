@@ -1,4 +1,4 @@
-# rstudio
+# rstudio server on ECS
 Hack for creating an rstudio container to run in ecs.
 
 More details to come.
