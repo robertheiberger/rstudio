@@ -4,12 +4,10 @@ ARG RSTUDIO_VERSION
 #ENV RSTUDIO_VERSION=${RSTUDIO_VERSION:-1.2.5033}
 ARG S6_VERSION
 ARG PANDOC_TEMPLATES_VERSION
-
 ENV S6_VERSION=${S6_VERSION:-v1.21.7.0}
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 ENV PATH=/usr/lib/rstudio-server/bin:$PATH
 ENV PANDOC_TEMPLATES_VERSION=${PANDOC_TEMPLATES_VERSION:-2.9}
-ENV USER = fid
 
 ## Download and install RStudio server & dependencies
 ## Attempts to get detect latest version, otherwise falls back to version given in $VER
@@ -57,11 +55,11 @@ RUN apt-get update \
     \n}' >> /usr/local/lib/R/etc/Rprofile.site \
   && echo "PATH=${PATH}" >> /usr/local/lib/R/etc/Renviron \
   ## Need to configure non-root user for RStudio
-  && useradd ${USER} \
-  && echo "${USER}:${USER}" | chpasswd \
-	&& mkdir /home/${USER} \
-	&& chown ${USER}:${USER} /home/${USER} \
-	&& addgroup ${USER} staff \
+  && useradd f404466 \
+  && echo "f404466:f404466" | chpasswd \
+	&& mkdir /home/f404466 \
+	&& chown f404466:f404466 /home/f404466 \
+	&& addgroup f404466 staff \
   ## Prevent rstudio from deciding to use /usr/bin/R if a user apt-get installs a package
   &&  echo 'rsession-which-r=/usr/local/bin/R' >> /etc/rstudio/rserver.conf \
   ## use more robust file locking to avoid errors when using shared volumes:
@@ -81,12 +79,12 @@ RUN apt-get update \
   && echo '#!/bin/bash \
           \n rstudio-server stop' \
           > /etc/services.d/rstudio/finish \
-  && mkdir -p /home/${USER}/.rstudio/monitored/user-settings \
+  && mkdir -p /home/f404466/.rstudio/monitored/user-settings \
   && echo 'alwaysSaveHistory="0" \
           \nloadRData="0" \
           \nsaveAction="0"' \
-          > /home/${USER}/.rstudio/monitored/user-settings/user-settings \
-  && chown -R ${USER}:${USER} /home/${USER}/.rstudio
+          > /home/f404466/.rstudio/monitored/user-settings/user-settings \
+  && chown -R f404466:f404466 /home/f404466/.rstudio
 
 COPY bash/userconf.sh /etc/cont-init.d/userconf
 
@@ -98,6 +96,6 @@ COPY bash/pam-helper.sh /usr/lib/rstudio-server/bin/pam-helper
 EXPOSE 8787
 
 ## automatically link a shared volume for kitematic users
-VOLUME /home/${USER}/kitematic
+VOLUME /home/f404466/kitematic
 
 CMD ["/init"]
