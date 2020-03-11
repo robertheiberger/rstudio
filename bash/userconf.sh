@@ -1,8 +1,8 @@
 #!/usr/bin/with-contenv bash
 
 ## Set defaults for environmental variables in case they are undefined
-USER=${USER:=FILLIN}
-PASSWORD=${PASSWORD:=FILLIN}
+USER=${USER:=f404466}
+PASSWORD=${PASSWORD:=f404466}
 USERID=${USERID:=1000}
 GROUPID=${GROUPID:=1000}
 ROOT=${ROOT:=FALSE}
